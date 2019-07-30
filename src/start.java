@@ -1,5 +1,9 @@
 //绘制开始界面
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class start {
     protected static void createAndshowGUI(){
         try {
@@ -31,7 +35,7 @@ public class start {
     private  static void changePanel(JPanel panel,JFrame frame)
     {
         panel.setLayout(null);//设定布局
-        ImageIcon imageicon = new ImageIcon("D:\\java learning\\java_game\\java_test1.0\\background.jpg");
+        ImageIcon imageicon = new ImageIcon("background.jpg");
         JLabel lb = new JLabel(imageicon);
         lb.setBounds(0,0,frame.getWidth(),frame.getHeight());
         frame.getLayeredPane().add(lb,new Integer(Integer.MIN_VALUE));
@@ -40,9 +44,24 @@ public class start {
         JButton userButton1 = new JButton("单人游戏");
         JButton userButton2 = new JButton("多人游戏");
         JButton userButton3 = new JButton("退出游戏");
+        userButton1.setFont(new Font("微软雅黑", Font.BOLD, 25));
+        userButton2.setFont(new Font("微软雅黑", Font.BOLD, 25));
+        userButton3.setFont(new Font("微软雅黑", Font.BOLD, 25));
         userButton1.setBounds(250,100,300,100);
         userButton2.setBounds(250,200,300,100);
         userButton3.setBounds(250,300,300,100);
+        userButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            singlegame.modeSelect(panel);
+            }
+        });
+        userButton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exitgame.exit();
+            }
+        });
         panel.add(userButton1);
         panel.add(userButton2);
         panel.add(userButton3);
