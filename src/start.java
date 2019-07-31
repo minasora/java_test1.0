@@ -22,6 +22,7 @@ public class start {
         }
         //风格设定
         JFrame frame = new JFrame("fivesonchest");
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,600);
         //框架设定
@@ -35,12 +36,15 @@ public class start {
     private  static void changePanel(JPanel panel,JFrame frame)
     {
         panel.setLayout(null);//设定布局
+
         ImageIcon imageicon = new ImageIcon("background.jpg");
         JLabel lb = new JLabel(imageicon);
         lb.setBounds(0,0,frame.getWidth(),frame.getHeight());
         frame.getLayeredPane().add(lb,new Integer(Integer.MIN_VALUE));
         JPanel j = (JPanel)frame.getContentPane();
         j.setOpaque(false);
+
+
         JButton userButton1 = new JButton("单人游戏");
         JButton userButton2 = new JButton("多人游戏");
         JButton userButton3 = new JButton("退出游戏");
@@ -53,7 +57,8 @@ public class start {
         userButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            singlegame.modeSelect(panel);
+                frame.remove(panel);
+                singlegame.modeSelect(frame);
             }
         });
         userButton3.addActionListener(new ActionListener() {
