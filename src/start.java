@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class start {
-    protected static void createAndshowGUI(){
+    JPanel panel = new JPanel();
+    protected  void createAndshowGUI(){
         try {
 
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");//Nimbus风格，jdk6 update10版本以后的才会出现
@@ -26,14 +27,14 @@ public class start {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,600);
         //框架设定
-        JPanel panel = new JPanel();
+
         frame.add(panel);
         changePanel(panel,frame);
         //面板设定
 
         frame.setVisible(true);
     }
-    private  static void changePanel(JPanel panel,JFrame frame)
+    protected void changePanel(JPanel panel,JFrame frame)
     {
         panel.setLayout(null);//设定布局
 
@@ -57,8 +58,9 @@ public class start {
         userButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(panel);
-                singlegame.modeSelect(frame);
+                panel.setVisible(false);
+                singlegame game = new singlegame();
+                game.modeSelect(frame,panel);
             }
         });
         userButton3.addActionListener(new ActionListener() {

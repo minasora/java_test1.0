@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class singlegame {
-    protected static void modeSelect(JFrame frame){
+    protected  void modeSelect(JFrame frame,JPanel panel){
 
         JPanel jp = new JPanel();
         jp.setLayout(null);
@@ -24,7 +24,7 @@ public class singlegame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.remove(jp);
-
+                panel.setVisible(true);
                 frame.repaint();
 
             }
