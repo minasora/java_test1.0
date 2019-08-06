@@ -36,6 +36,7 @@ public class start {
     }
     protected void changePanel(JPanel panel,JFrame frame)
     {
+
         panel.setLayout(null);//设定布局
 
         ImageIcon imageicon = new ImageIcon("background.jpg");
@@ -72,6 +73,7 @@ public class start {
         panel.add(userButton1);
         panel.add(userButton2);
         panel.add(userButton3);
+
         panel.setOpaque(false);
     }
 

@@ -1,36 +1,126 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class singlegame {
-    protected  void modeSelect(JFrame frame,JPanel panel){
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-        JPanel jp = new JPanel();
+
+
+public class singlegame {
+    class gameJpanel extends JPanel
+    {
+        public void paint(Graphics g)
+        {
+            g.clipRect(0,0,800,800);
+            BufferedImage bi = new BufferedImage(700,500,BufferedImage.TYPE_INT_RGB);
+            try {
+                Image bg = ImageIO.read(new File("background3.jpg"));
+                g.drawImage(bg,1,20,this);
+            }
+            catch(IOException e)
+            {
+
+            }
+            for(int i = 0;i<=15;i++)
+                for(int j = 0;j<=15;j++) {
+                    if (chest[i][j] == 1) {
+                        g.setColor(Color.black);
+                        g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
+                    }
+                    if (chest[i][j] == 2)
+                    {
+                        g.setColor(Color.WHITE);
+                        g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
+                    }
+                }
+        }
+
+    }
+    static int x;
+    static int y;
+    static int BlackorWhite = 2; //1 时为black，2时为white
+    static int chest[][]  = new int[200][200];
+    static void restart()
+    {
+        for(int i=0;i<=20;i++)
+            for(int j=0;j<=29;j++)
+                chest[i][j] =0;
+        BlackorWhite = 2;
+    }
+    protected  void modeSelect(JFrame frame,JPanel panel){
+        restart();
+        gameJpanel jp = new gameJpanel();
         jp.setLayout(null);
-        ImageIcon imageicon = new ImageIcon("background3.jpg");
-        JLabel lb = new JLabel(imageicon);
-        lb.setBounds(20,20,500,500);
-        jp.add(lb);
-        JButton userButton1 = new JButton("设定难度");
-        JButton userButton2 = new JButton("悔棋");
-        JButton userButton3 = new JButton("回到主菜单");
-        userButton1.setBounds(550,100,200,50);
-        userButton2.setBounds(550,150,200,50);
-        userButton3.setBounds(550,200,200,50);
-        jp.add(userButton1);
-        jp.add(userButton2);
-        jp.add(userButton3);
-        userButton3.addActionListener(new ActionListener() {
+        jp.setVisible(true);
+        frame.add(jp);
+        jp.addMouseListener(new MouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.remove(jp);
-                panel.setVisible(true);
-                frame.repaint();
+            public void mouseClicked(MouseEvent e) {
+                        singlegame.x=e.getX();
+                        singlegame.y=e.getY();
+                        System.out.println(singlegame.x);
+                        System.out.println(singlegame.y);
+                        if(singlegame.x>20 && singlegame.y>40 &&singlegame.x<520 && singlegame.y<540) {
+                            int tmp1 = (singlegame.x - 23) / 29;
+                            int tmp2 = (singlegame.y - 45) / 29;
+                            if (chest[tmp1][tmp2] == 0) {
+                                if (BlackorWhite == 2) {
+                                    chest[tmp1][tmp2] = 2;
+                                    BlackorWhite = 1;
+                                } else {
+                                    chest[tmp1][tmp2] = 1;
+                                    BlackorWhite = 2;
+                                }
+
+                            }
+                            jp.update(jp.getGraphics());
+                        }
+                         if(singlegame.x>537 && singlegame.x<665) {
+                             if (singlegame.y > 110 && singlegame.y < 124) {
+                                 restart();
+                                 frame.repaint();
+                             }
+                             if (singlegame.y > 181 && singlegame.y < 195) {
+
+                             }
+                             if(singlegame.y > 244 && singlegame.y <257){
+                                 frame.remove(jp);
+                                 panel.setVisible(true);
+                                 frame.repaint();
+                             }
+                         }
+
+
+
+                        }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
 
             }
         });
-        frame.add(jp);
         frame.setVisible(true);
         frame.repaint();
+
     }
 }
