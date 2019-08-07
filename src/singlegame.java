@@ -41,6 +41,8 @@ public class singlegame {
         }
 
     }
+    static int lastx;
+    static int lasty;
     static int x;
     static int y;
     static int BlackorWhite = 2; //1 时为black，2时为white
@@ -63,17 +65,29 @@ public class singlegame {
             public void mouseClicked(MouseEvent e) {
                         singlegame.x=e.getX();
                         singlegame.y=e.getY();
-                        System.out.println(singlegame.x);
-                        System.out.println(singlegame.y);
                         if(singlegame.x>20 && singlegame.y>40 &&singlegame.x<520 && singlegame.y<540) {
                             int tmp1 = (singlegame.x - 23) / 29;
                             int tmp2 = (singlegame.y - 45) / 29;
+                            singlegame.lastx = tmp1;
+                            singlegame.lasty = tmp2;
                             if (chest[tmp1][tmp2] == 0) {
+                                System.out.println(BlackorWhite);
                                 if (BlackorWhite == 2) {
                                     chest[tmp1][tmp2] = 2;
+                                    if(algorithm.Checkwin(chest,tmp1,tmp2,BlackorWhite))
+                                    {
+                                        if(algorithm.Checkwin(chest,tmp1,tmp2,BlackorWhite))
+                                        {
+                                            JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束",JOptionPane.WARNING_MESSAGE);
+                                        }
+                                    }
                                     BlackorWhite = 1;
                                 } else {
                                     chest[tmp1][tmp2] = 1;
+                                    if(algorithm.Checkwin(chest,tmp1,tmp2,BlackorWhite))
+                                    {
+                                        JOptionPane.showMessageDialog(jp, "黑方胜利", "游戏结束",JOptionPane.WARNING_MESSAGE);
+                                    }
                                     BlackorWhite = 2;
                                 }
 
@@ -86,13 +100,17 @@ public class singlegame {
                                  frame.repaint();
                              }
                              if (singlegame.y > 181 && singlegame.y < 195) {
-
+                                 chest[lastx][lasty] = 0;
+                                 if(BlackorWhite == 1)BlackorWhite =2;
+                                 else BlackorWhite= 1;
+                                 frame.repaint();
                              }
                              if(singlegame.y > 244 && singlegame.y <257){
                                  frame.remove(jp);
                                  panel.setVisible(true);
                                  frame.repaint();
                              }
+
                          }
 
 
@@ -119,6 +137,7 @@ public class singlegame {
 
             }
         });
+
         frame.setVisible(true);
         frame.repaint();
 
