@@ -71,20 +71,21 @@ public class singlegame {
                             singlegame.lastx = tmp1;
                             singlegame.lasty = tmp2;
                             if (chest[tmp1][tmp2] == 0) {
-                                System.out.println(BlackorWhite);
                                 if (BlackorWhite == 2) {
                                     chest[tmp1][tmp2] = 2;
-                                    if(algorithm.Checkwin(chest,tmp1,tmp2,BlackorWhite))
+                                    algorithm.Checkwin(chest,BlackorWhite);
+                                    if(algorithm.Ifwin)
                                     {
-                                        if(algorithm.Checkwin(chest,tmp1,tmp2,BlackorWhite))
-                                        {
+
                                             JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束",JOptionPane.WARNING_MESSAGE);
-                                        }
+
                                     }
                                     BlackorWhite = 1;
                                 } else {
                                     chest[tmp1][tmp2] = 1;
-                                    if(algorithm.Checkwin(chest,tmp1,tmp2,BlackorWhite))
+                                    algorithm.Checkwin(chest,BlackorWhite);
+
+                                    if(algorithm.Ifwin)
                                     {
                                         JOptionPane.showMessageDialog(jp, "黑方胜利", "游戏结束",JOptionPane.WARNING_MESSAGE);
                                     }
