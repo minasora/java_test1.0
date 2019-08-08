@@ -98,12 +98,15 @@ public class singlegame {
                                 if (chest[tmp1][tmp2] == 0) {
                                     if (BlackorWhite == 2) {
                                         chest[tmp1][tmp2] = 2;
+                                        algorithm.Checkwin(chest,2);
+                                        jp.update(jp.getGraphics());
                                         if (algorithm.Ifwin) {
 
                                             JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
                                         }
                                     }
-                                    algorithm.MAX_MIN_search(1,chest);
+                                    algorithm.MAX_search(chest,1);
+                                    System.out.println(algorithm.ans);
                                 }
 
 

@@ -1,3 +1,5 @@
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+
 public class algorithm {
     static final int WIN5 = 10000;
     static final int ALive4 = 10000;
@@ -18,6 +20,7 @@ public class algorithm {
     static boolean Ifstart = true;
     static boolean Ifwin;
     static int ans = 0;
+    static int ans1 = 0;
 
     algorithm() {
         for (int i = 0; i < 16; i++) {
@@ -180,40 +183,138 @@ public class algorithm {
         }
         return ans;
     }
-    private static boolean If_stable(int chest[][],int x,int y)//周围有棋子才考虑
+
+    protected static boolean If_stable(int chest[][], int x, int y)//周围有棋子才考虑
     {
-        if (x == 0 || y == 0 || x == 16 || y == 16) return true;
+        if (x == 0 || y == 0 || x == 16 || y == 16) return false;
         if (chest[x][y] != 0) return false;
         else if ((chest[x + 1][y + 1] != 0 || chest[x + 1][y] != 0 || chest[x + 1][y - 1] != 0 || chest[x - 1][y - 1] != 0 || chest[x - 1][y + 1] != 0 || chest[x - 1][y] != 0 || chest[x][y - 1] != 0 || chest[x][y + 1] != 0)) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
+    /*
 //极大极小搜索，设置迭代次数，自己下的时候选择
     protected static void MAX_MIN_search(int tmp,int chest[][])
     {
         int MAX_score=0;
         int MIN_score=0;
-        int cur_x = 0;
-        int cur_y = 0;
+        int ans =-999;
+        int cur_x1 = 0;
+        int cur_y1 = 0;
+        int cur_x2 =0;
+        int cur_y2 = 0;
             for(int i=0;i<=15;i++)
                 for(int j=0;j<=15;j++)
                 {
                     if(If_stable(chest,i,j))
                     {
                         chest[i][j] =(tmp%2);
-                        if(MAX_score < Checkwin(chest,tmp%2))
+                        MAX_score =Checkwin(chest,tmp%2);
+                        if(ans < MAX_score)
                         {
-                            cur_x = i;
-                            cur_y = j;
+                            cur_x1 = i;
+                            cur_y1 = j;
+                            ans = MAX_score;
                         }
+
                         chest[i][j] = 0;
                     }
+
                 }
-        chest[cur_x][cur_y] =tmp%2;
+            ans = ans +MAX_score;
+        for(int i=0;i<=15;i++)
+            for(int j=0;j<=15;j++)
+            {
+                if(If_stable(chest,i,j))
+                {
+                    chest[i][j] =(tmp%2+1);
+                    if(MIN_score > Checkwin(chest,tmp%2+1))
+                    {
+                        cur_x2 = i;
+                        cur_y2 = j;
+                        MIN_score = Checkwin(chest,tmp%2+1);
+                    }
+                    chest[i][j] = 0;
+                }
+
+            }
+         for(int i =0;i<=15;i++)
+             for(int j=0;j<=15;j++)
+             {
+
+             }
         }
-}
+
+     */
+    static int cur_x1;
+    static int cur_y1;
+    static int result[][] = new int[16][16];
+
+    protected static void MAX_search(int chest[][], int depth) {
+        ans1 = -9999;
+        for (int i = 0; i <= 15; i++)
+            for (int j = 0; j <= 15; j++)
+                if (If_stable(chest, i, j)) {
+                    chest[i][j] = 1;
+                    result[i][j] = Checkwin(chest, 1) - 2*Checkwin(chest, 2);
+                    if(Ifwin)
+                    {
+                        chest[i][j] =1;
+                        return;
+                    }
+                    chest[i][j] = 0;
+                } else {
+                    result[i][j] = -9998 ;
+                }
+
+
+        for(int p=0;p<=15;p++)
+            for(int q=0;q<=15;q++) {
+
+                if (ans1 < result[p][q]) {
+                    ans1 = result[p][q];
+                    cur_x1 = p;
+                    cur_y1 = q;
+
+                }
+            }
+        chest[cur_x1][cur_y1]=1;
+        return;
+    }
+
+
+
+
+       /* int ans =-9999;
+        if(depth==3)
+        {
+           for(int i=0;i<=15;i++)
+               for(int j=0;j<=15;j++)
+                   result[i][j] = Checkwin(chest,1)-Checkwin(chest,2);
+               return;
+        }
+        for(int i=0;i<=15;i++)
+            for(int j=0;j<=15;j++)
+            {
+                if(If_stable(chest,i,j)) {
+                    chest[i][j] = (depth + 1) % 2 + 1;
+                    MAX_search(chest, depth + 1);
+                    for(int p=0;p<=15;p++)
+                        for(int q=0;q<=15;q++) {
+                            if(ans<result[p][q])
+                                ans =result[p][q];
+                                cur_x1 = p;
+                                cur_y1 = q;
+                        }
+                    chest[i][j] = 0;
+                }
+            }
+
+        */
+        }
+
+
 
 
 
