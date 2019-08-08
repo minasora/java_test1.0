@@ -26,6 +26,7 @@ public class singlegame {
             {
 
             }
+
             for(int i = 0;i<=15;i++)
                 for(int j = 0;j<=15;j++) {
                     if (chest[i][j] == 1) {
@@ -70,27 +71,41 @@ public class singlegame {
                             int tmp2 = (singlegame.y - 45) / 29;
                             singlegame.lastx = tmp1;
                             singlegame.lasty = tmp2;
-                            if (chest[tmp1][tmp2] == 0) {
-                                if (BlackorWhite == 2) {
-                                    chest[tmp1][tmp2] = 2;
-                                    algorithm.Checkwin(chest,BlackorWhite);
-                                    if(algorithm.Ifwin)
-                                    {
+                            if(menu.If_ai == 0) {
+                                if (chest[tmp1][tmp2] == 0) {
+                                    if (BlackorWhite == 2) {
+                                        chest[tmp1][tmp2] = 2;
+                                      algorithm.Checkwin(chest, BlackorWhite);
+                                        if (algorithm.Ifwin) {
 
-                                            JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束",JOptionPane.WARNING_MESSAGE);
+                                            JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
 
+                                        }
+                                        BlackorWhite = 1;
+                                    } else {
+                                        chest[tmp1][tmp2] = 1;
+
+                                        if (algorithm.Ifwin) {
+                                            JOptionPane.showMessageDialog(jp, "黑方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                        BlackorWhite = 2;
                                     }
-                                    BlackorWhite = 1;
-                                } else {
-                                    chest[tmp1][tmp2] = 1;
-                                    algorithm.Checkwin(chest,BlackorWhite);
 
-                                    if(algorithm.Ifwin)
-                                    {
-                                        JOptionPane.showMessageDialog(jp, "黑方胜利", "游戏结束",JOptionPane.WARNING_MESSAGE);
-                                    }
-                                    BlackorWhite = 2;
                                 }
+                            }
+                            if(menu.If_ai==1)
+                            {
+                                if (chest[tmp1][tmp2] == 0) {
+                                    if (BlackorWhite == 2) {
+                                        chest[tmp1][tmp2] = 2;
+                                        if (algorithm.Ifwin) {
+
+                                            JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
+                                        }
+                                    }
+                                    algorithm.MAX_MIN_search(1,chest);
+                                }
+
 
                             }
                             jp.update(jp.getGraphics());
