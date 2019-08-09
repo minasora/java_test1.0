@@ -250,37 +250,83 @@ public class algorithm {
     static int cur_x1;
     static int cur_y1;
     static int result[][] = new int[16][16];
-
-    protected static void MAX_search(int chest[][], int depth) {
-        ans1 = -9999;
-        for (int i = 0; i <= 15; i++)
-            for (int j = 0; j <= 15; j++)
-                if (If_stable(chest, i, j)) {
-                    chest[i][j] = 1;
-                    result[i][j] = Checkwin(chest, 1) - 2*Checkwin(chest, 2);
-                    if(Ifwin)
-                    {
-                        chest[i][j] =1;
-                        return;
+    static int ans_1 =-9999;
+    static int ans_2 =-9999;
+    protected static void MAX_MIN_search(int chest[][],int depth)
+    {
+        if(depth == 5)//最底层
+        {
+            ans_1 =-99999;
+            for(int i=0;i<=15;i++)
+                for(int j=0;j<=15;j++)
+                {
+                 if(If_stable(chest,i,j))
+                 {
+                     chest[i][j] = 1;
+                     if(ans_1 < Checkwin(chest,1)-2*Checkwin(chest,2))
+                     {
+                         ans_1 = Checkwin(chest,1)-2*Checkwin(chest,2);
+                     }
+                     chest[i][j] = 0;
+                 }
+                 else
+                     result[i][j] = -9996;
+                }
+            return;
+        }
+        if(depth%2==1)//奇数层
+        {
+            for(int i=0;i<=15;i++)
+                for(int j = 0;j<=15;j++)
+                {
+                    if(If_stable(chest,i,j)) {
+                        chest[i][j]=1;
+                        MAX_MIN_search(chest, depth + 1);
+                        result[i][j] = ans_2;
+                        chest[i][j]=0;
                     }
-                    chest[i][j] = 0;
-                } else {
-                    result[i][j] = -9998 ;
+                }
+        }
+        if(depth%2==0)//偶数层
+        {
+            ans_2=99999;
+            for(int i=0;i<=15;i++)
+                for(int j = 0;j<=15;j++)
+                {
+                    if(If_stable(chest,i,j)) {
+                        chest[i][j]=2;
+                        MAX_MIN_search(chest, depth + 1);
+                        result[i][j] = ans_1;
+                        chest[i][j] = 0;
+                    }
+                }
+            for(int i=0;i<=15;i++)
+                for(int j = 0;j<=15;j++) {
+                    if (If_stable(chest, i, j)) {
+                        if(ans_2>result[i][j])
+                        {
+                            ans_2 = result[i][j];
+                        }
+
+                    }
+                }
+        }
+        if(depth==1) {
+            ans_2= -9999;
+            for (int i = 0; i <= 15; i++)
+                for (int j = 0; j <= 15; j++){
+                    if (If_stable(chest, i, j)){
+                        if (ans_2 < result[i][j]) {
+                            ans_2 = result[i][j];
+                            cur_x1 = i;
+                            cur_y1 = j;
+                        }
+
                 }
 
 
-        for(int p=0;p<=15;p++)
-            for(int q=0;q<=15;q++) {
-
-                if (ans1 < result[p][q]) {
-                    ans1 = result[p][q];
-                    cur_x1 = p;
-                    cur_y1 = q;
-
-                }
-            }
-        chest[cur_x1][cur_y1]=1;
-        return;
+        }
+            chest[cur_x1][cur_y1] = 1;}
     }
 
 
@@ -312,9 +358,22 @@ public class algorithm {
             }
 
         */
-        }
 
+        protected static void print()
+        {
+        for(int i=0;i<=15;i++)
+            {
+            for(int j=0;j<=15;j++)
+            {
+                if(If_stable(singlegame.chest,i,j))
+                System.out.print(result[i][j]);
+                System.out.print(" ");
+            }
+                System.out.println();
+    }
 
+}
+}
 
 
 

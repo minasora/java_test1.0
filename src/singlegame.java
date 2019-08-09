@@ -32,11 +32,17 @@ public class singlegame {
                     if (chest[i][j] == 1) {
                         g.setColor(Color.black);
                         g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
+                         String a = String.valueOf(algorithm.result[i][j]);
+                        g.setColor(Color.green);
+                        g.drawString( a ,23 + 29 * i,45 + 29 * j);
                     }
                     if (chest[i][j] == 2)
                     {
                         g.setColor(Color.WHITE);
                         g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
+                        String a = String.valueOf(algorithm.result[i][j]);
+                        g.setColor(Color.green);
+                        g.drawString( a ,23 + 29 * i,45 + 29 * j);
                     }
                 }
         }
@@ -84,7 +90,7 @@ public class singlegame {
                                         BlackorWhite = 1;
                                     } else {
                                         chest[tmp1][tmp2] = 1;
-
+                                        algorithm.Checkwin(chest, BlackorWhite);
                                         if (algorithm.Ifwin) {
                                             JOptionPane.showMessageDialog(jp, "黑方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
                                         }
@@ -105,8 +111,9 @@ public class singlegame {
                                             JOptionPane.showMessageDialog(jp, "白方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
                                         }
                                     }
-                                    algorithm.MAX_search(chest,1);
-                                    System.out.println(algorithm.ans);
+                                    algorithm.MAX_MIN_search(chest,1);
+                                    algorithm.print();
+                                    //System.out.println(algorithm.ans);
                                 }
 
 
