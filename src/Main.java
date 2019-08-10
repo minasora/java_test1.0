@@ -1,7 +1,13 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) {
-        start.createAndshowGUI();
+        start ak = new start();
+        ak.createAndshowGUI();
     }
 
 }

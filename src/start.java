@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class start {
-    protected static void createAndshowGUI(){
+    JPanel panel = new JPanel();
+    protected  void createAndshowGUI(){
         try {
 
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");//Nimbus风格，jdk6 update10版本以后的才会出现
@@ -26,15 +27,16 @@ public class start {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,600);
         //框架设定
-        JPanel panel = new JPanel();
+
         frame.add(panel);
         changePanel(panel,frame);
         //面板设定
 
         frame.setVisible(true);
     }
-    private  static void changePanel(JPanel panel,JFrame frame)
+    protected void changePanel(JPanel panel,JFrame frame)
     {
+
         panel.setLayout(null);//设定布局
 
         ImageIcon imageicon = new ImageIcon("background.jpg");
@@ -47,18 +49,22 @@ public class start {
 
         JButton userButton1 = new JButton("单人游戏");
         JButton userButton2 = new JButton("多人游戏");
+        JButton userButton4 = new JButton("游戏设置");
         JButton userButton3 = new JButton("退出游戏");
         userButton1.setFont(new Font("微软雅黑", Font.BOLD, 25));
         userButton2.setFont(new Font("微软雅黑", Font.BOLD, 25));
         userButton3.setFont(new Font("微软雅黑", Font.BOLD, 25));
+        userButton4.setFont(new Font("微软雅黑", Font.BOLD, 25));
         userButton1.setBounds(250,100,300,100);
         userButton2.setBounds(250,200,300,100);
-        userButton3.setBounds(250,300,300,100);
+        userButton4.setBounds(250,300,300,100);
+        userButton3.setBounds(250,400,300,100);
         userButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.remove(panel);
-                singlegame.modeSelect(frame);
+                panel.setVisible(false);
+                singlegame game = new singlegame();
+                game.modeSelect(frame,panel);
             }
         });
         userButton3.addActionListener(new ActionListener() {
@@ -67,9 +73,20 @@ public class start {
                 exitgame.exit();
             }
         });
+        userButton4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.setVisible(false);
+                menu.select_menu(frame,panel);
+
+            }
+        });
+
         panel.add(userButton1);
         panel.add(userButton2);
         panel.add(userButton3);
+        panel.add(userButton4);
+
         panel.setOpaque(false);
     }
 
