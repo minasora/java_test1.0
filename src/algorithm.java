@@ -254,7 +254,7 @@ public class algorithm {
     static int ans_2 =-9999;
     protected static void MAX_MIN_search(int chest[][],int depth)
     {
-        if(depth == 5)//最底层
+        if(depth == 3)//最底层
         {
             ans_1 =-99999;
             for(int i=0;i<=15;i++)
@@ -278,6 +278,9 @@ public class algorithm {
         {
             for(int i=0;i<=15;i++)
                 for(int j = 0;j<=15;j++)
+                    result[i][j] = 0;
+            for(int i=0;i<=15;i++)
+                for(int j = 0;j<=15;j++)
                 {
                     if(If_stable(chest,i,j)) {
                         chest[i][j]=1;
@@ -290,6 +293,9 @@ public class algorithm {
         if(depth%2==0)//偶数层
         {
             ans_2=99999;
+            for(int i=0;i<=15;i++)
+                for(int j = 0;j<=15;j++)
+                    result[i][j] = 0;
             for(int i=0;i<=15;i++)
                 for(int j = 0;j<=15;j++)
                 {
@@ -312,7 +318,7 @@ public class algorithm {
                 }
         }
         if(depth==1) {
-            ans_2= -9999;
+            ans_2= -99999;
             for (int i = 0; i <= 15; i++)
                 for (int j = 0; j <= 15; j++){
                     if (If_stable(chest, i, j)){
@@ -365,9 +371,16 @@ public class algorithm {
             {
             for(int j=0;j<=15;j++)
             {
-                if(If_stable(singlegame.chest,i,j))
-                System.out.print(result[i][j]);
-                System.out.print(" ");
+                if(If_stable(singlegame.chest,j,i)) {
+
+                    System.out.printf("%3s",result[i][j]);
+                    System.out.print(" ");
+                }
+                else if(singlegame.chest[j][i]!=0)
+                {
+                    System.out.printf("%3s",singlegame.chest[j][i]);
+                    System.out.print(" ");
+                }
             }
                 System.out.println();
     }
