@@ -32,17 +32,23 @@ public class singlegame {
                     if (chest[i][j] == 1) {
                         g.setColor(Color.black);
                         g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
-                         String a = String.valueOf(algorithm.result[i][j]);
-                        g.setColor(Color.green);
-                        g.drawString( a ,23 + 29 * i,45 + 29 * j);
+                        for(int p=0;p<=15;p++)
+                            for(int q =0;q<=15;q++){
+                                String a = String.valueOf(algorithm.result[p][q]);
+                                g.setColor(Color.black);
+                                g.drawString(a, 23 + 29 * p, 45 + 29 * q);
+                            }
                     }
                     if (chest[i][j] == 2)
                     {
                         g.setColor(Color.WHITE);
                         g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
-                        String a = String.valueOf(algorithm.result[i][j]);
-                        g.setColor(Color.green);
-                        g.drawString( a ,23 + 29 * i,45 + 29 * j);
+                        for(int p=0;p<=15;p++)
+                            for(int q =0;q<=15;q++){
+                            String a = String.valueOf(algorithm.result[p][q]);
+                            g.setColor(Color.black);
+                            g.drawString(a, 23 + 29 * p, 45 + 29 * q);
+                        }
                     }
                 }
         }
@@ -112,6 +118,10 @@ public class singlegame {
                                         }
                                     }
                                     algorithm.MAX_MIN_search(chest,1);
+                                    if (algorithm.Ifwin) {
+
+                                        JOptionPane.showMessageDialog(jp, "黑方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
+                                    }
                                     algorithm.print();
                                     //System.out.println(algorithm.ans);
                                 }

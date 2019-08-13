@@ -263,14 +263,13 @@ public class algorithm {
                  if(If_stable(chest,i,j))
                  {
                      chest[i][j] = 1;
-                     if(ans_1 < Checkwin(chest,1)-2*Checkwin(chest,2))
+                     if(ans_1 < Checkwin(chest,2)-Checkwin(chest,1))
                      {
-                         ans_1 = Checkwin(chest,1)-2*Checkwin(chest,2);
+                         ans_1 = Checkwin(chest,2)-(Checkwin(chest,1));
                      }
                      chest[i][j] = 0;
                  }
-                 else
-                     result[i][j] = -9996;
+
                 }
             return;
         }
