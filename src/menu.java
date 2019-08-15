@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class menu {
     static int If_ai = 0;
+    static int If_time =0;
     protected static void select_menu(JFrame jFrame,JPanel panel)
     {
         JPanel jp = new JPanel();
@@ -12,6 +13,7 @@ public class menu {
         JButton button1 = new JButton("回主菜单");
         button1.setBounds(500,300,200,100);
         button1.setFont(new Font("微软雅黑",Font.BOLD,23));
+        JRadioButton radioButton3 = new JRadioButton("时间显示");
 
         jp.setLayout(null);
         JRadioButton radioBtn01 = new JRadioButton("本地双人");
@@ -22,6 +24,8 @@ public class menu {
         JRadioButton radioBtn02 = new JRadioButton("ai对战");
         radioBtn02.setBounds(250,150,300,50);
         radioBtn02.setFont(new Font("微软雅黑",Font.BOLD,25));
+        radioButton3.setBounds(250,200,300,50);
+        radioButton3.setFont(new Font("微软雅黑",Font.BOLD,25));
         ButtonGroup btnGroup = new ButtonGroup();
         btnGroup.add(radioBtn01);
         btnGroup.add(radioBtn02);
@@ -44,6 +48,8 @@ public class menu {
                 System.out.println(If_ai);
             }
         });
+
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

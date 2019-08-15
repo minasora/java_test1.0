@@ -8,7 +8,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class singlegame {
@@ -62,9 +63,12 @@ public class singlegame {
     static int chest[][]  = new int[200][200];
     static void restart()
     {
-        for(int i=0;i<=20;i++)
-            for(int j=0;j<=29;j++)
+        for(int i=0;i<=15;i++)
+            for(int j=0;j<=15;j++)
+            {
                 chest[i][j] =0;
+                algorithm.result[i][j] = 0;
+            }
         BlackorWhite = 2;
     }
     protected  void modeSelect(JFrame frame,JPanel panel){

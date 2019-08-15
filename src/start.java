@@ -81,6 +81,14 @@ public class start {
 
             }
         });
+        userButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.setVisible(false);
+                mutligame game = new mutligame();
+                mutligame.Multiselect(frame,panel);
+            }
+        });
 
         panel.add(userButton1);
         panel.add(userButton2);
