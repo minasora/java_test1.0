@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class start {
     JPanel panel = new JPanel();
@@ -86,7 +87,13 @@ public class start {
             public void actionPerformed(ActionEvent e) {
                 panel.setVisible(false);
                 mutligame game = new mutligame();
-                mutligame.Multiselect(frame,panel);
+                try {
+                    mutligame.Multiselect(frame, panel);
+                }
+                catch (IOException a)
+                {
+
+                }
             }
         });
 

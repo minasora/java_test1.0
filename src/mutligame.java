@@ -6,13 +6,17 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.Socket;
 
 public class mutligame{
     static int chest[][] = new int [16][16];
     static int x;
     static int y;
+    static Socket client;
     static int BlackorWhite =2;
-    public static void Multiselect(JFrame jf,JPanel jp) {
+    public static void Multiselect(JFrame jf,JPanel jp) throws IOException{
         class gameJpanel extends JPanel
         {
             public void paint(Graphics g)
@@ -57,6 +61,9 @@ public class mutligame{
         }
         gameJpanel gameJpanel = new gameJpanel();
         jf.add(gameJpanel);
+
+
+
         gameJpanel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
