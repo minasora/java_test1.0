@@ -4,9 +4,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -16,6 +14,59 @@ public class mutligame{
     static int y;
     static Socket client;
     static int BlackorWhite =2;
+    public static void Newsocket() throws IOException
+    {
+        client = new Socket(InetAddress.getLocalHost(),5678);
+    }
+    public static void input(JPanel game) throws IOException
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                            while(true) {
+                                DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+                                DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+                                String in = dataInputStream.readUTF();
+                                System.out.println("1321321");
+                                String[] temp;
+                                String delimeter = "-";  // 指定分割字符
+                                temp = in.split(delimeter);
+                                chest[Integer.valueOf(temp[0])][Integer.valueOf(temp[1])] = Integer.valueOf(temp[2]);
+                                game.update(game.getGraphics());
+                            }
+                    }
+                catch(IOException s)
+                {
+
+                }
+            }
+        }).start();
+
+
+
+
+    }
+
+    public static void client(int tmp1,int tmp2,int BlackorWhite) throws IOException
+    {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+                    DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+
+                    String str = String.valueOf(tmp1) + "-" + String.valueOf(tmp2) + "-" + String.valueOf(BlackorWhite);
+                    dataOutputStream.writeUTF(str);
+                } catch (IOException b) {
+
+                }
+            }
+        }).start();
+
+
+    }
     public static void Multiselect(JFrame jf,JPanel jp) throws IOException{
         class gameJpanel extends JPanel
         {
@@ -61,8 +112,8 @@ public class mutligame{
         }
         gameJpanel gameJpanel = new gameJpanel();
         jf.add(gameJpanel);
-
-
+        Newsocket();
+        input(gameJpanel);
 
         gameJpanel.addMouseListener(new MouseListener() {
             @Override
@@ -75,23 +126,12 @@ public class mutligame{
                     singlegame.lastx = tmp1;
                     singlegame.lasty = tmp2;
                         if (chest[tmp1][tmp2] == 0) {
-                            if (BlackorWhite == 2) {
-                                chest[tmp1][tmp2] = 2;
-                                algorithm.Checkwin(chest, BlackorWhite);
-                                System.out.println("1");
-                                if (algorithm.Ifwin) {
+                            chest[tmp1][tmp2] = BlackorWhite;
+                            try {
+                                client(tmp1, tmp2, BlackorWhite);
+                            } catch (IOException t)
+                            {
 
-                                    JOptionPane.showMessageDialog(gameJpanel, "白方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
-
-                                }
-                                BlackorWhite = 1;
-                            } else {
-                                chest[tmp1][tmp2] = 1;
-                                algorithm.Checkwin(chest, BlackorWhite);
-                                if (algorithm.Ifwin) {
-                                    JOptionPane.showMessageDialog(gameJpanel, "黑方胜利", "游戏结束", JOptionPane.WARNING_MESSAGE);
-                                }
-                                BlackorWhite = 2;
                             }
                             gameJpanel.update(gameJpanel.getGraphics());
                         }
