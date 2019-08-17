@@ -78,7 +78,7 @@ public class algorithm {
         Ifstart = true;
     }
 
-    protected static int Checkwin(int chest[][], int tmp) {//评估函数
+    public static int Checkwin(int chest[][], int tmp) {//评估函数
         ans = 0;
         Ifwin = false;
         for (int i = 0; i <= 15; i++)//竖着

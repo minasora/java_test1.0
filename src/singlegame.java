@@ -15,6 +15,7 @@ import java.util.Date;
 public class singlegame {
     class gameJpanel extends JPanel
     {
+        private Image offScreenImage;
         public void paint(Graphics g)
         {
             g.clipRect(0,0,800,800);
@@ -33,25 +34,18 @@ public class singlegame {
                     if (chest[i][j] == 1) {
                         g.setColor(Color.black);
                         g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
-                        for(int p=0;p<=15;p++)
-                            for(int q =0;q<=15;q++){
-                                String a = String.valueOf(algorithm.result[p][q]);
-                                g.setColor(Color.black);
-                                g.drawString(a, 23 + 29 * p, 45 + 29 * q);
-                            }
-                    }
+
+                }
                     if (chest[i][j] == 2)
                     {
                         g.setColor(Color.WHITE);
                         g.fillOval(23 + 29 * i, 45 + 29 * j, 20, 20);
-                        for(int p=0;p<=15;p++)
-                            for(int q =0;q<=15;q++){
-                            String a = String.valueOf(algorithm.result[p][q]);
-                            g.setColor(Color.black);
-                            g.drawString(a, 23 + 29 * p, 45 + 29 * q);
                         }
                     }
                 }
+        public void update(Graphics g)
+        {
+            paint(g);
         }
 
     }

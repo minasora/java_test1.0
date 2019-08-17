@@ -88,6 +88,7 @@ public class start {
                 panel.setVisible(false);
                 mutligame game = new mutligame();
                 try {
+                    mutligame.Can_restart = false;
                     mutligame.Multiselect(frame, panel);
                 }
                 catch (IOException a)
