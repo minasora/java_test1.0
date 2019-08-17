@@ -8,16 +8,41 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.temporal.JulianFields;
 import java.util.Date;
 
+class Time implements Runnable{
+    private JButton jb = new JButton();
+    public  Time(JButton jb)
+    {
+        this.jb = jb;
+    }
+    public void run()
+    {
+        while(true)
+        {
+            DateFormat d1 =DateFormat.getDateTimeInstance();
+            jb.setText(d1.format(new Date()));
+            try{
+                Thread.sleep(1000);
 
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+}
 public class singlegame {
     class gameJpanel extends JPanel
     {
         private Image offScreenImage;
         public void paint(Graphics g)
         {
+            jb.requestFocus();
             g.clipRect(0,0,800,800);
             BufferedImage bi = new BufferedImage(700,500,BufferedImage.TYPE_INT_RGB);
             try {
@@ -49,6 +74,7 @@ public class singlegame {
         }
 
     }
+    JButton jb = new JButton();
     static int lastx;
     static int lasty;
     static int x;
@@ -67,10 +93,14 @@ public class singlegame {
     }
     protected  void modeSelect(JFrame frame,JPanel panel){
         restart();
+        new Thread(new Time(jb)).start();
+        jb.setBounds(500,400,200,100);
+
         gameJpanel jp = new gameJpanel();
         jp.setLayout(null);
         jp.setVisible(true);
         frame.add(jp);
+        jp.add(jb);
         jp.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
