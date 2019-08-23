@@ -6,9 +6,8 @@ import java.io.IOException;
 public class Main {
     static int chest[][]  = new int[200][200];
     public static void main(String[] args) {
-        start ak = new start();
+        login.Login();
 
-        ak.createAndshowGUI();
     }
 
 }
