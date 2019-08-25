@@ -8,23 +8,13 @@ import java.io.IOException;
 public class start {
     JPanel panel = new JPanel();
     protected  void createAndshowGUI(){
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            // If Nimbus is not available, you can set the GUI to another look and feel.
-        }
+
         //风格设定
         JFrame frame = new JFrame("fivesonchest");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800,600);
         //框架设定
-
         frame.add(panel);
         changePanel(panel,frame);
         //面板设定
@@ -35,7 +25,6 @@ public class start {
     {
 
         panel.setLayout(null);//设定布局
-
         ImageIcon imageicon = new ImageIcon("background.jpg");
         JLabel lb = new JLabel(imageicon);
         lb.setBounds(0,0,frame.getWidth(),frame.getHeight());
