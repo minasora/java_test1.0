@@ -2,12 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class login {
     protected static void Login()
     {
         JFrame jf = new JFrame("登录");
-
+        jf.setResizable(false);
         //设置窗体的位置及大小
         jf.setBounds(600, 200, 300, 250);
         jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,9 +38,25 @@ public class login {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jf.dispose();
-                start ak = new start();
-                ak.createAndshowGUI();
+
+                String usr = username.getText();
+                char psd1[] = password.getPassword();
+                String psd = String.valueOf(psd1);
+                if(usr.length()>24 || psd.length()>24)
+                    JOptionPane.showMessageDialog(jp,"用户名或密码过长，请重新输入");
+                else {
+                    try {
+                        if (testsql.Sign_in(usr, psd)) {
+                            jf.dispose();
+                            start ak = new start();
+                            ak.createAndshowGUI();
+                        } else {
+                            JOptionPane.showMessageDialog(jp, "用户名或密码错误，请重新输入");
+                        }
+                    } catch (Exception y) {
+
+                    }
+                }
             }
         });
     }
