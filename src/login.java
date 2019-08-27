@@ -59,5 +59,12 @@ public class login {
                 }
             }
         });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jp.setVisible(false);
+                Sign_up.Sign_up(jf,jp);
+            }
+        });
     }
 }

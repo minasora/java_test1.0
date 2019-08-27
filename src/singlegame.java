@@ -43,7 +43,7 @@ class Time implements Runnable{
 
     {
 
-        while(true)
+        while(singlegame.If_end == 1)
 
         {
 
@@ -53,11 +53,8 @@ class Time implements Runnable{
             jb.setText("时间:"+I+"s");
 
             try{
-
-                Thread.sleep(1000);
                 singlegame.time++;
-
-
+                Thread.sleep(1000);
             }
 
             catch(Exception e)
@@ -103,8 +100,6 @@ public class singlegame {
             catch(IOException e)
 
             {
-
-
 
             }
 
@@ -171,6 +166,8 @@ public class singlegame {
 
     static int chest[][]  = new int[200][200];
 
+    static int If_end =1 ;
+
     static void restart()
 
     {
@@ -188,6 +185,8 @@ public class singlegame {
             }
 
         BlackorWhite = 2;
+            If_end = 1;
+            singlegame.time = 0;
 
     }
 
@@ -195,7 +194,8 @@ public class singlegame {
 
         restart();
 
-        new Thread(new Time(jb)).start();
+        Thread a = new Thread(new Time(jb));
+        a.start();
 
         jb.setBounds(500,300,200,100);
 
@@ -208,9 +208,9 @@ public class singlegame {
         jp.setVisible(true);
 
         frame.add(jp);
-
-        jp.add(jb);
-
+        if(menu.If_time==1) {
+            jp.add(jb);
+        }
         jp.addMouseListener(new MouseListener() {
 
             @Override
@@ -331,7 +331,6 @@ public class singlegame {
                     if (singlegame.y > 110 && singlegame.y < 124) {
 
                         restart();
-
                         frame.repaint();
 
                     }
@@ -344,12 +343,21 @@ public class singlegame {
 
                         else BlackorWhite= 1;
 
+
                         frame.repaint();
 
                     }
 
                     if(singlegame.y > 244 && singlegame.y <257){
 
+                        If_end = 0;
+                        try {
+                            Thread.sleep(1001);
+                        }
+                        catch (Exception a)
+                        {
+
+                        }
                         frame.remove(jp);
 
                         panel.setVisible(true);

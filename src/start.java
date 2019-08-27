@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 public class start {
@@ -24,6 +25,9 @@ public class start {
     protected void changePanel(JPanel panel,JFrame frame)
     {
 
+        File music = new File("background.mp3");
+        Thread t = new Thread(new music.Audioplayer(music));
+        t.start();
         panel.setLayout(null);//设定布局
         ImageIcon imageicon = new ImageIcon("background.jpg");
         JLabel lb = new JLabel(imageicon);

@@ -32,9 +32,11 @@ public class menu {
         radioBtn01.setSelected(true);
         jp.add(radioBtn01);
         jp.add(radioBtn02);
+        jp.add(radioButton3);
         jFrame.add(jp);
         jp.add(lb1);
         jp.add(button1);
+
         radioBtn01.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +55,11 @@ public class menu {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(radioButton3.isSelected())
+                {
+                    If_time = 1;
+                }
+                else If_time = 0;
                 jFrame.remove(jp);
                 jFrame.repaint();
                 panel.setVisible(true);
