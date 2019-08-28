@@ -9,6 +9,12 @@ import java.io.IOException;
 public class start {
     JPanel panel = new JPanel();
     protected  void createAndshowGUI(){
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+
+        }
+        catch (Exception a) {
+        }
 
         //风格设定
         JFrame frame = new JFrame("fivesonchest");

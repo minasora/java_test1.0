@@ -73,12 +73,14 @@ class Time implements Runnable{
 
 public class singlegame {
 
+    File click = new File("click.mp3");
+
     class gameJpanel extends JPanel
 
     {
 
         private Image offScreenImage;
-
+        File music = new File("click");
         public void paint(Graphics g)
 
         {
@@ -223,6 +225,13 @@ public class singlegame {
 
                 if(singlegame.x>20 && singlegame.y>40 &&singlegame.x<520 && singlegame.y<540) {
 
+                    try {
+                        music.click(click);
+                    }
+                    catch (Exception y)
+                    {
+
+                    }
                     int tmp1 = (singlegame.x - 23) / 29;
 
                     int tmp2 = (singlegame.y - 45) / 29;
