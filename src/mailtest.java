@@ -25,8 +25,8 @@ public class mailtest {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress("minasora@163.com","minasora","UTF-8"));
         message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress("minasora@163.com", "用户", "UTF-8"));
-        message.setSubject("hello","UTF-8");
-        message.setContent("Hello,World","text/html;charset=UTF-8");
+        message.setSubject("五子棋游戏验证码","UTF-8");
+        message.setContent("用户您好，您的注册申请已被接受，您的验证码为'"+confirm.con_code()+"',Please join my game！","text/html;charset=UTF-8");
         message.setSentDate(new Date());
         //传输对象
         Transport transport = session.getTransport();

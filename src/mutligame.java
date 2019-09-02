@@ -10,7 +10,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class mutligame {
-    static int chest[][] = new int[16][16];
+    static int[][] chest = new int[16][16];
     static int x;
     static int y;
     static Socket client;
@@ -85,7 +85,7 @@ public class mutligame {
                     DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
                     DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
 
-                    String str = String.valueOf(tmp1) + "-" + String.valueOf(tmp2) + "-" + String.valueOf(BlackorWhite);
+                    String str = tmp1 + "-" + tmp2 + "-" + BlackorWhite;
                     dataOutputStream.writeUTF(str);
                 } catch (IOException b) {
 

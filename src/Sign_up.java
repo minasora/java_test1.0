@@ -80,6 +80,13 @@ public class Sign_up {
 
             }
         });
+        Button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jf.remove(sign_up_panel);
+                jp.setVisible(true);
+            }
+        });
     }
 
 }

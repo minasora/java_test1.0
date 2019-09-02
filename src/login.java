@@ -40,7 +40,7 @@ public class login {
             public void actionPerformed(ActionEvent e) {
 
                 String usr = username.getText();
-                char psd1[] = password.getPassword();
+                char[] psd1 = password.getPassword();
                 String psd = String.valueOf(psd1);
                 if(usr.length()>24 || psd.length()>24)
                     JOptionPane.showMessageDialog(jp,"用户名或密码过长，请重新输入");
