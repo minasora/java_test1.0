@@ -27,7 +27,7 @@ public class testsql {
         Statement stmt = conn.createStatement();
         stmt.executeUpdate(
                 "insert into  chest(usr,psd) values ('"+usr+"','"+psd+"')"
-        )
+        );
     }
 
 

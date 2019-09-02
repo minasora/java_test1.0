@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Sign_up {
     protected static void Sign_up(JFrame jf,JPanel jp) {
@@ -45,7 +47,40 @@ public class Sign_up {
         sign_up_panel.add(Button3);
         jf.add(sign_up_panel);
         jf.setVisible(true);
+        Button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String usr = username.getText();
+                String psd = String.valueOf(password.getPassword());
+                String psd_con = String.valueOf(pas_comfird.getPassword());
 
+                if (psd.equals(psd_con))
+                {
+                    if(regex_check.If_mail_legal(usr) && (regex_check.If_psd_legal(psd)))
+                    {
+                        JOptionPane.showMessageDialog(jp,"请查收邮箱获取验证码");
+                        try
+                        {
+                            testsql.Sing_up(usr,psd);
+                        }
+                        catch (Exception s)
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(jp,"用户名或密码非法，请重新输入");
+                    }
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(jp,"密码前后不一致！");
+                }
+
+            }
+        });
     }
+
 }
 
