@@ -309,7 +309,7 @@ public class singlegame {
 
                             }
 
-                            algorithm.MAX_MIN_search(chest,1);
+                            algorithm.next_step(chest);
 
                             if (algorithm.Ifwin) {
 
