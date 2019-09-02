@@ -21,8 +21,14 @@ public class testsql {
         }
         return false;
     }
-    public static void Sing_up(String usr,String psd)
-    {
-
+    public static void Sing_up(String usr,String psd) throws Exception{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
+        Statement stmt = conn.createStatement();
+        stmt.executeUpdate(
+                "insert into  chest(usr,psd) values ('"+usr+"','"+psd+"')"
+        )
     }
+
+
 }
