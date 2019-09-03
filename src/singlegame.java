@@ -166,7 +166,7 @@ public class singlegame {
 
     static int BlackorWhite = 2; //1 时为black，2时为white
 
-    static int[][] chest = new int[200][200];
+    static int chest[][]  = new int[200][200];
 
     static int If_end =1 ;
 
@@ -308,8 +308,8 @@ public class singlegame {
                                 }
 
                             }
-                            algorithm al = new algorithm();
-                            al.MAX_MIN_search(chest,2);
+
+                            algorithm.next_step(chest);
 
                             if (algorithm.Ifwin) {
 

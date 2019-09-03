@@ -1,13 +1,6 @@
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 public class algorithm {
-    class Pos
-    {
-        int x;
-        int y;
-        int ans;
-    }
-    static final int MAX_depth = 5;
     static final int WIN5 = 10000;
     static final int ALive4 = 10000;
     static final int ALive3 = 1000;
@@ -18,9 +11,9 @@ public class algorithm {
     static final int Alive1 = 10;
     static int cur_x;
     static int cur_y;
-    static int[] x_y_aris = new int[16];
-    static int[] y_x_aris = new int[16];
-    //返回情况的总分
+    static int x_y_aris[] = new int[16];
+    static int y_x_aris[] = new int[16];
+    ;//返回情况的总分
     static boolean DeadorAlice = false;//判断是活棋还是死棋
     static int counts = 0;//连字数
     static int flag = 0;//被挡数
@@ -37,8 +30,9 @@ public class algorithm {
     }
 
 
-    protected static boolean Ifstop(int[][] chest, int i, int j, int tmp, boolean Ifstart) {
-        return chest[i][j] != tmp && chest[i][j] != 0 && Ifstart == false;
+    protected static boolean Ifstop(int chest[][], int i, int j, int tmp, boolean Ifstart) {
+        if (chest[i][j] != tmp && chest[i][j] != 0 && Ifstart == false) return true;
+        else return false;
     }
 
     static int countScore(int counts, int flag) {
@@ -84,7 +78,7 @@ public class algorithm {
         Ifstart = true;
     }
 
-    public static int Checkwin(int[][] chest, int tmp) {//评估函数
+    public static int Checkwin(int chest[][], int tmp) {//评估函数
         ans = 0;
         Ifwin = false;
         for (int i = 0; i <= 15; i++)//竖着
@@ -190,11 +184,13 @@ public class algorithm {
         return ans;
     }
 
-    protected static boolean If_stable(int[][] chest, int x, int y)//周围有棋子才考虑
+    protected static boolean If_stable(int chest[][], int x, int y)//周围有棋子才考虑
     {
         if (x == 0 || y == 0 || x == 16 || y == 16) return false;
         if (chest[x][y] != 0) return false;
-        else return (chest[x + 1][y + 1] != 0 || chest[x + 1][y] != 0 || chest[x + 1][y - 1] != 0 || chest[x - 1][y - 1] != 0 || chest[x - 1][y + 1] != 0 || chest[x - 1][y] != 0 || chest[x][y - 1] != 0 || chest[x][y + 1] != 0);
+        else if ((chest[x + 1][y + 1] != 0 || chest[x + 1][y] != 0 || chest[x + 1][y - 1] != 0 || chest[x - 1][y - 1] != 0 || chest[x - 1][y + 1] != 0 || chest[x - 1][y] != 0 || chest[x][y - 1] != 0 || chest[x][y + 1] != 0)) {
+            return true;
+        } else return false;
     }
 
     /*
@@ -253,93 +249,68 @@ public class algorithm {
      */
     static int cur_x1;
     static int cur_y1;
-    static int[][] result = new int[16][16];
-    static int ans_1 =-9999;
-    static int ans_2 =-9999;
-    protected void binary_search(int[][] chest)//基本搜索，给子节点赋值
-    {
-        for(int i=0;i<=15;i++)
-            for(int j=0;j<=15;j++)
-            {
-                result[i][j] = Checkwin(chest,1);
-            }
-    }
+    static int result[][] = new int[16][16];
+    static int ans_1 = -9999;
+    static int ans_2 = -9999;
 
-    protected  void MAX_MIN_search(int[][] chest, int depth)
-    {
-
-        if(depth == 1)//最小深度
-        {
-            binary_search(chest);//给子节点赋值
-            return;
-        }
-        if(depth%2==0)//偶数层，极小搜索
-        {
-            for(int i =0;i<=15;i++)
-                for(int j=0;j<=15;j++)
-                    if(If_stable(chest,i,j))//假如可搜索
-                    {
-                        chest[i][j] = 2;
-                        MAX_MIN_search(chest,depth-1);
-                        MIN_search(chest);
-                        result[i][j] = MIN_search(chest).ans;
-                        chest[i][j] = 0;
-                    }
-        }
-        if(depth%2==1)//奇数层，极大搜索
-        {
-            for(int i =0;i<=15;i++)
-                for(int j=0;j<=15;j++)
-                    if(If_stable(chest,i,j))//假如可搜索
-                    {
+    protected static void next_step(int chest[][]) {
+        int ans = -999999;
+        int cur_x = 0;
+        int cur_y = 0;
+        for (int i = 0; i <= 15; i++)
+            for (int j = 0; j <= 15; j++) {
+                if (If_stable(chest, i, j)) {
+                    if (chest[i][j] == 0) {
                         chest[i][j] = 1;
-                        MAX_MIN_search(chest,depth-1);
-
-                        MAX_search(chest);
+                        result[i][j] = MAX_MIN_search(chest, 2,alpha,beta);
                         chest[i][j] = 0;
+                        if (ans < result[i][j]) {
+                            ans = result[i][j];
+                            cur_x = i;
+                            cur_y = j;
+                        }
                     }
 
-        }
-        for(int i=0;i<=15;i++) {
-            for (int j = 0; j <= 15; j++)
-                System.out.print(result[i][j]);
-            System.out.println();
-        }
-        Pos pos = MAX_search(chest);
-        chest[pos.x][pos.y] = 1;
-
+                }
+            }
+        chest[cur_x][cur_y] = 1;
 
     }
-    protected  Pos MIN_search(int[][] chest)//极小搜索
-    {
-        int ans = 99999999;
-        Pos pos = new Pos();
-        for(int i = 0;i<=15;i++)
-            for(int j=0;j<=15;j++)
-                if(If_stable(chest,i,j)) {
-                    if (result[i][j] < ans) {
-                        ans = result[i][j];
-                        pos.x = i;
-                        pos.y = j;
-                        pos.ans = ans;
+    static int alpha = -99999999;
+    static int beta = 99999999;
+    protected static int MAX_MIN_search(int chest[][], int depth,int alpha,int beta) {//极大极小搜索
+        if (depth == 1)//到达根节点了就退出
+        {
+            return Checkwin(chest, 1)-2*Checkwin(chest,2);
+        }
+        if (depth % 2 == 1)//max_search
+        {
+            int ans = -999999;
+            for (int i = 0; i <= 15; i++)
+                for (int j = 0; j <= 15; j++) {
+
+                    if (If_stable(chest, i, j)) {
+                        chest[i][j] = 1;
+                        alpha = Math.max(alpha,MAX_MIN_search(chest, depth - 1,alpha,beta));
+                        chest[i][j] = 0;
+                        if(beta<=alpha)break;
                     }
                 }
-        return pos;
-    }
-    protected  Pos MAX_search(int[][] chest)//极大搜索
-    {
-        int ans = -1;
-        Pos pos = new Pos();
-        for(int i=0;i<=15;i++)
-            for(int j=0;j<=15;j++)
-                if(If_stable(chest,i,j)) {
-                    if (result[i][j] > ans) {
-                        ans = result[i][j];
-                        pos.x = i;
-                        pos.y = j;
+            return alpha;
+        } else  //min_search
+        {
+            int best = 9999999;
+            for (int i = 0; i <= 15; i++)
+                for (int j = 0; j <= 15; j++) {
+                    if (If_stable(chest, i, j)) {
+                        chest[i][j] = 2;
+                        beta = Math.min(beta,MAX_MIN_search(chest,depth-1,alpha,beta));//beta剪
+                        chest[i][j] = 0;
+                        if(beta<=alpha)break;
                     }
                 }
-        return pos;
+            return beta;
+        }
     }
 
 
@@ -372,28 +343,22 @@ public class algorithm {
 
         */
 
-        protected static void print()
-        {
-        for(int i=0;i<=15;i++)
-            {
-            for(int j=0;j<=15;j++)
-            {
-                if(If_stable(singlegame.chest,j,i)) {
+    protected static void print() {
+        for (int i = 0; i <= 15; i++) {
+            for (int j = 0; j <= 15; j++) {
 
-                    System.out.printf("%3s",result[i][j]);
-                    System.out.print(" ");
-                }
-                else if(singlegame.chest[j][i]!=0)
-                {
-                    System.out.printf("%3s",singlegame.chest[j][i]);
-                    System.out.print(" ");
-                }
+                System.out.printf("%3s", result[i][j]);
+                System.out.print(" ");
+
             }
-                System.out.println();
+            System.out.println();
+        }
     }
+}
 
-}
-}
+
+
+
 
 
 
